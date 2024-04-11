@@ -1,10 +1,8 @@
 import mysql.connector
 from faker import Faker
 from faker.generator import random
-from faker.providers.ssn.pt_BR import Provider as BRProvider
 
 fake = Faker()
-provider_br = BRProvider(fake)
 
 niveis = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
