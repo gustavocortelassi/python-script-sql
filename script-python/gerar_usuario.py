@@ -20,13 +20,13 @@ else:
 
 cursor = mydb.cursor()
 
-num_users = 500
+num_users = 1000000
 
 for _ in range(num_users):
     
     Nome = fake.name()
     CPF = provider_br.cpf()
-    Empresas_Id = fake.pyint(0,5000)
+    Empresas_Id = fake.pyint(3, 1002)
 
     
     sql = "INSERT INTO Usuarios (Nome, CPF, Empresas_Id) VALUES (%s, %s, %s)"

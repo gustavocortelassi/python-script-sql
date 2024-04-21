@@ -20,7 +20,7 @@ else:
 
 cursor = mydb.cursor()
 
-num_emp = 5000
+num_emp = 10000
 
 Faker.seed(0)
 for _ in range(num_emp):

@@ -20,7 +20,7 @@ else:
 
 cursor = mydb.cursor()
 
-num_perguntas = 50
+num_perguntas = 2000000
 
 for _ in range(num_perguntas):
     

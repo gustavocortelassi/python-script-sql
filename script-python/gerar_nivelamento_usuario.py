@@ -17,7 +17,7 @@ else:
 
 cursor = mydb.cursor()
 
-num_nivUser = 50
+num_nivUser = 1000000
 
 for _ in range(num_nivUser):
     
@@ -26,7 +26,7 @@ for _ in range(num_nivUser):
     Niveis_Id = niveis[fake.random_int(min=0, max=len(niveis)-1)]
     Tipo_Prova_Id = fake.random_int(min=1, max=4)  
 
-    Usuarios_Id = fake.random_int(min=1, max=50) 
+    Usuarios_Id = fake.random_int(min=1, max=1000000) 
 
     sql = "INSERT INTO Nivelamento_Usuario (Niveis_Id, Tipo_Prova_Id, Usuarios_Id) VALUES (%s, %s, %s)"
     val = (Niveis_Id, Tipo_Prova_Id, Usuarios_Id)

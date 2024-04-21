@@ -17,13 +17,13 @@ else:
 
 cursor = mydb.cursor()
 
-num_formResp = 50
+num_formResp = 100000
 
 for _ in range(num_formResp):
     Correto = fake.boolean()  
     Correto = 1 if Correto else 0  
-    Perguntas_Id = fake.random_int(min=1, max=50)
-    Usuarios_Id = fake.random_int(min=1, max=50)
+    Perguntas_Id = fake.random_int(min=1, max=150000)
+    Usuarios_Id = fake.random_int(min=5001, max=100000)
 
     sql = "INSERT INTO Formulario_Respondido (Correto, Perguntas_Id, Usuarios_Id) VALUES (%s, %s, %s)"
     val = (Correto, Perguntas_Id, Usuarios_Id)

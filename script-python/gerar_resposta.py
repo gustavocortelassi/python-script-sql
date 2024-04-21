@@ -17,7 +17,7 @@ else:
 
 cursor = mydb.cursor()
 
-num_respostas = 50
+num_respostas = 2000000
 
 for _ in range(num_respostas):
     
@@ -25,7 +25,7 @@ for _ in range(num_respostas):
     Correto = fake.boolean()  
     Correto = 1 if Correto else 0 
     Ordem = fake.random_int(min=1, max=10)  
-    Perguntas_Id = fake.random_int(min=1, max=50)
+    Perguntas_Id = fake.random_int(min=1, max=2000000)
 
     sql = "INSERT INTO Respostas (Titulo, Correto, Ordem, Perguntas_Id) VALUES (%s, %s, %s, %s)"
     val = (Titulo, Correto, Ordem, Perguntas_Id)
