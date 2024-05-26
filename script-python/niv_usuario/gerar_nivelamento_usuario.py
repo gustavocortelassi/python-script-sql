@@ -7,7 +7,7 @@ mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="root",
-    database="bancodados"
+    database="yonder"
 )
 
 if mydb.is_connected():
@@ -18,22 +18,21 @@ else:
 cursor = mydb.cursor()
 
 num_nivUser = 15000000
-batch_size = 1000  # Tamanho do lote
+batch_size = 10000  # Tamanho do lote
 
 try:
     for i in range(0, num_nivUser, batch_size):
         batch_data = []
         for _ in range(batch_size):
-            niveis = ["A1", "A2", "B1", "B2", "C1", "C2"]
-            Niveis_Id = niveis[fake.random_int(min=0, max=len(niveis)-1)]
-            Tipo_Prova_Id = fake.random_int(min=1, max=4)
-            Usuarios_Id = fake.random_int(min=1, max=1000000)
-            batch_data.append((Niveis_Id, Tipo_Prova_Id, Usuarios_Id))
+            niveis_id = fake.random_int(min=1, max=6)
+            tipo_prova_id = fake.random_int(min=1, max=4)
+            user_id = fake.random_int(min=4700, max=15004699)  
+            batch_data.append((niveis_id, tipo_prova_id, user_id))
         
-        sql = "INSERT INTO Nivelamento_Usuario (Niveis_Id, Tipo_Prova_Id, Usuarios_Id) VALUES (%s, %s, %s)"
+        sql = "INSERT INTO nivelamento_usuario (niveis_id, tipo_prova_id, user_id) VALUES (%s, %s, %s)"
         cursor.executemany(sql, batch_data)
         mydb.commit()
-        print(f"Inseridos {i + batch_size} registros")
+        print(f"Inseridos {i + batch_size if i + batch_size <= num_nivUser else num_nivUser} registros")
 
 finally:
     cursor.close()

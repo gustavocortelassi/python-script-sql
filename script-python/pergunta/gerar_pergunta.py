@@ -1,16 +1,15 @@
 import mysql.connector
 from faker import Faker
-from faker.generator import random
 
 fake = Faker()
 
-niveis = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+import mysql.connector
 
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="root",
-    database="bancodados" 
+    database="yonder"
 )
 
 if mydb.is_connected():
@@ -20,23 +19,26 @@ else:
 
 cursor = mydb.cursor()
 
-num_perguntas = 2000000
+num_registros = 90000
+batch_size = 10000  # Tamanho do lote
+form_resp_id = 10001  # Inicializando o form_resp_id
 
-for _ in range(num_perguntas):
-    
-    Cabecalho = fake.sentence()
-    Dificuldade = fake.random_int(min=1, max=6)
-    Tipo_Prova_Id = fake.random_int(min=1, max=4)
-    Niveis_Id = random.choice(niveis)
-    Audio = fake.uri()
+try:
+    for i in range(10000, num_registros, batch_size):
+        batch_data = []
+        for _ in range(batch_size):
+            corrigido = fake.boolean()
+            resposta = fake.text(max_nb_chars=5000)
+            batch_data.append((corrigido, resposta, form_resp_id))
+            form_resp_id += 1  # Incrementando o form_resp_id
+        
+        sql = "INSERT INTO formulario_write (corrigido, resposta, form_resp_id) VALUES (%s, %s, %s)"
+        cursor.executemany(sql, batch_data)
+        mydb.commit()
+        print(f"Inseridos {i + batch_size if i + batch_size <= num_registros else num_registros} registros")
 
-    sql = "INSERT INTO Perguntas (Cabecalho, Dificuldade, Tipo_Prova_Id, Niveis_Id, Audio) VALUES (%s, %s, %s, %s, %s)"
-    val = (Cabecalho, Dificuldade, Tipo_Prova_Id, Niveis_Id, Audio)
+finally:
+    cursor.close()
+    mydb.close()
 
-    cursor.execute(sql, val)
-    mydb.commit()
-
-print(num_perguntas, "registros inseridos com sucesso.")
-
-cursor.close()
-mydb.close()
+print(num_registros, "registros inseridos com sucesso.")
