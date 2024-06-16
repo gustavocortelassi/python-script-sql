@@ -20,7 +20,7 @@ else:
 
 cursor = mydb.cursor()
 
-num_users = 15000000
+num_users = 5000000
 batch_size = 100000  # Tamanho do lote
 
 Faker.seed(0)
@@ -31,7 +31,7 @@ try:
         for _ in range(batch_size):
             Nome = fake.name()
             CPF = provider_br.cpf()
-            Empresas_Id = fake.pyint(1, 100000)
+            Empresas_Id = fake.pyint(100000, 200000)
             batch_data.append((Nome, CPF, Empresas_Id))
         
         sql = "INSERT INTO usuario (nome, cpf, emp_id) VALUES (%s, %s, %s)"
